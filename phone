@@ -1,0 +1,34 @@
+import itertools
+num_dict = {
+    # 1: [],
+    2: ['A', 'B', 'C'],
+    3: ['D', 'E', 'F'],
+    4: ['G', 'H', 'I'],
+    5: ['J', 'K', 'L'],
+    6: ['M', 'N', 'O'],
+    7: ['P', 'Q', 'R', 'S'],
+    8: ['T', 'U', 'V'],
+    9: ['W', 'X', 'Y', 'Z'],
+    # 0: []
+}
+while 1:
+    input_list = list(map(int, input('请输入:').split(',')))
+    for item in range(len(input_list)-1,-1,-1):  #正向删除会出现漏删数据的错误，使用反向索引删除
+        if input_list[item] == 1 or input_list[item] == 0:
+            del input_list[item]
+    # print(input_list)
+    result = num_dict[input_list[0]]
+    if len(input_list) > 1:  #如果此时去除掉0和1的列表中的数据个数大于2时
+        for i in range(1, len(input_list)):
+            l1 = result.copy()
+            result = []  # 不能用clear
+            for item in itertools.product(l1, num_dict[input_list[i]]):  #笛卡尔积，结果存放在元祖中
+                a = ''.join(item)  # 将每一次结果元祖中的每一项元祖拼接在一起 例:（'a','b'）拼接成ab
+                result.append(a)
+    print('结果有%d条:' % len(result))
+    for i in result:
+        i = i.lower()
+        print(i, end=' ')
+    print(' ')
+
+
